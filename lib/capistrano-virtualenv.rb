@@ -197,7 +197,7 @@ module Capistrano
             top.put(virtualenv_requirements.join("\n"), virtualenv_requirements_file) unless virtualenv_requirements.empty?
             run("touch #{virtualenv_requirements_file.dump}")
             pip_options = ( virtualenv_pip_options + virtualenv_pip_install_options ).map { |x| x.dump }.join(" ")
-            virtualenv.exec("pip install #{pip_options} -r #{virtualenv_requirements_file.dump}",
+            virtualenv.exec("cd #{File.dirname(virtualenv_requirements_file).dump} && pip install #{pip_options} -r #{virtualenv_requirements_file.dump}",
                             :virtualenv => virtualenv_shared_path)
             virtualenv_build_requirements.each do |package, options|
               options ||= []
